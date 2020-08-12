@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hakunassan.github.io</id>
     <title>Hakuna&apos;s homepage</title>
-    <updated>2020-08-12T07:52:02.581Z</updated>
+    <updated>2020-08-12T07:54:02.020Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hakunassan.github.io"/>
     <link rel="self" href="https://hakunassan.github.io/atom.xml"/>
@@ -10,6 +10,62 @@
     <logo>https://hakunassan.github.io/images/avatar.png</logo>
     <icon>https://hakunassan.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Hakuna&apos;s homepage</rights>
+    <entry>
+        <title type="html"><![CDATA[爬取微博搜索图片]]></title>
+        <id>https://hakunassan.github.io/post/pa-qu-wei-bo-sou-suo-tu-pian/</id>
+        <link href="https://hakunassan.github.io/post/pa-qu-wei-bo-sou-suo-tu-pian/">
+        </link>
+        <updated>2020-08-12T07:52:57.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<pre><code class="language-python">import requests
+import re
+import os
+import time
+#cookie = '自己写奥'
+header = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4144.2 Safari/537.36',
+    'cookie': '自己写奥'
+}
+get_order = input('是否启动程序? yes or no:   ') or 'yes'
+number = 1
+content = 'ghs' #搜索内容如有特殊字符，需转换
+while True:
+    if get_order != 'no':
+        print('抓取中......')  # 下面的链接填写微博搜索的链接
+        url = f'https://s.weibo.com/weibo?q={content}&amp;wvr=6&amp;b=1&amp;Refer=SWeibo_box&amp;page={number}'
+        response = requests.get(url, headers=header)
+        result = response.text
+        print(result)
+        detail = re.findall('data=&quot;uid=(.*?)&amp;mid=(.*?)&amp;pic_ids=(.*?)&quot;&gt;', result)
+        for part in detail:
+            head = part[0]
+            feet = part[2]
+            feet = feet.split(',')
+            for foot in feet:
+                url_x = f'https://wx1.sinaimg.cn/large/{foot}.jpg'  # 这里就是大图链接了
+                response_photo = requests.get(url_x, headers=header)
+                file_name = url_x[-10:]
+								#先创建portrait文件夹
+                if not os.path.exists('f:/20200628/portrait/'+head):
+                    os.mkdir('f:/20200628/portrait/'+head)
+								# 保存文件
+                with open('f:/20200628/portrait/'+head + '/' + file_name, 'ab') as f:  
+                    f.write(response_photo.content)
+                    time.sleep(0.5)
+
+        print('获取完毕')
+        get_order = input('是否继续获取下一页? Y:yes N:no:   ')
+        if get_order != 'no':
+            number += 1
+        else:
+            print('程序结束')
+            break
+    else:
+        print('程序结束')
+        break
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[基于tkinter的项目管理]]></title>
         <id>https://hakunassan.github.io/post/ji-yu-tkinter-de-xiang-mu-guan-li/</id>
