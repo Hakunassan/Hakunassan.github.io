@@ -1,10 +1,10 @@
-<html lang="zh">
+<html>
 <head>
     <meta charset="utf-8"/>
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>关于 - Gridea</title>
+<title>Centos7.6安装Redis5.0.5 | Gridea</title>
 
 <link rel="shortcut icon" href="https://hakunassan.github.io/favicon.ico?v=1597212988903">
 
@@ -25,7 +25,7 @@
 
 
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
 </head>
 <body>
 <div class="main gt-bg-theme-color-first">
@@ -86,18 +86,85 @@
 </nav>
 
     <div class="post-container">
-        <div class="post-detail">
+        <div class="post-detail gt-bg-theme-color-second">
             <article class="gt-post-content">
-                <div class="post-content">
+                <h2 class="post-title">
+                    Centos7.6安装Redis5.0.5
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-08-12 ·
+                    </time>
                     
+                        <a href="https://hakunassan.github.io/tag/9nsBcedZP/" class="post-tags">
+                            # Linux
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <pre><code class="language-bash"># 在centOS下安装redis5.0.5
+
+cd /usr/local    # 进入所要安装的目录
+wget http://download.redis.io/releases/redis-5.0.5.tar.gz    # 下载redis5.0.5
+tar -xzf redis-5.0.5.tar.gz    # 解压
+cd /usr/local/redis-5.0.5 # 进入解压目录 
+yum install gcc gcc-c++ -y   
+make # 编译
+
+# 配置redis
+
+# 若部署在远程服务器，例如阿里云，需要在安全策略组中加入6379端口的访问权限，否则防火墙会阻止访问6379端口，导致无法正常连接redis
+#开放6379端口
+firewall-cmd --zone=public --add-port=6379/tcp --permanent
+#重新载入，使其生效
+firewall-cmd --reload
+
+cd /usr/local/redis-5.0.5  # 进入安装目录
+cp redis.conf redis.conf.bak    # 备份redis配置文件
+
+vim redis.conf    # 编辑配置文件
+
+    requirepass xxxxxxxxxx    # 设置访问密码（可以不设置）
+    注释掉 bind 127.0.0.1    # 设置redis为任何ip都可访问，如需设置指定ip，则添加bind
+    protected-mode no    # 设置为no，否则不能保证全网段进行访问
+    daemonize yes    # 设置为yes，保证以守护进程的方式运行redis
+
+修改完成后保存退出
+
+# 建立redis-server、redis-cli软连接
+ln -s /usr/local/redis-5.0.5/src/redis-server /usr/bin/redis-server
+ln -s /usr/local/redis-5.0.5/src/redis-cli /usr/bin/redis-cli
+
+# 直接运行redis-server将以前端形式启动redis
+
+#redis-cli测试
+redis-cli
+redis&gt;set foo bar
+OK
+redis&gt;get foo
+&quot;bar&quot;
+#即成功！
+
+</code></pre>
+
                 </div>
             </article>
         </div>
-        <br>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://hakunassan.github.io/post/hello-gridea/" class="post-title gt-a-link">
+                    Hello Gridea
+                </a>
+            </div>
         
 
         
 
+        
+
+        
 
         <div class="site-footer gt-c-content-color-first">
     <div class="slogan gt-c-content-color-first">温故而知新</div>
