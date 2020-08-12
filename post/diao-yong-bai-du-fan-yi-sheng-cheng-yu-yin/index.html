@@ -4,7 +4,7 @@
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Hakuna&#39;s homepage</title>
+<title>调用百度翻译生成语音 | Hakuna&#39;s homepage</title>
 
 <link rel="shortcut icon" href="https://hakunassan.github.io/favicon.ico?v=1597218686050">
 
@@ -25,11 +25,11 @@
 
 
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
 </head>
 <body>
 <div class="main gt-bg-theme-color-first">
-    <div class="main-content">
-        <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg">
     <div class="navbar-brand">
         <img class="user-avatar" src="/images/avatar.png" alt="头像">
         <div class="site-name gt-c-content-color-first">
@@ -85,25 +85,79 @@
     </div>
 </nav>
 
-        <div class="post-container">
-            <div class="post-detail gt-bg-theme-color-first">
-                <article class="gt-post-content">
-                    <h2 class="post-title">标签</h2>
-        <div class="tags-container">
-            
-                <a class="tag gt-c-content-color-first gt-a-link"
-                   href="https://hakunassan.github.io/tag/sgSewW8y5/">#Python</a>
-            
-                <a class="tag gt-c-content-color-first gt-a-link"
-                   href="https://hakunassan.github.io/tag/9nsBcedZP/">#Linux</a>
-            
-                <a class="tag gt-c-content-color-first gt-a-link"
-                   href="https://hakunassan.github.io/tag/BJ7bGMpw_/">#Gridea</a>
-            
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    调用百度翻译生成语音
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-08-12 ·
+                    </time>
+                    
+                        <a href="https://hakunassan.github.io/tag/sgSewW8y5/" class="post-tags">
+                            # Python
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>秀到我了</p>
+<!-- more -->
+<h3 id="代码说明">代码说明</h3>
+<ol>
+<li>导入requests、playsound模块</li>
+<li>通过url和cookie调用百度翻译网页生成语音</li>
+<li>保存语音文件至程序目录的test.mp3中</li>
+<li>使用playsound方法播放语音</li>
+</ol>
+<pre><code class="language-python">from requests import get
+from playsound import playsound
+
+trans_url = 'https://fanyi.baidu.com/gettts?'
+content = input(&quot;输入一句话：&quot;)
+# content = &quot;&quot;&quot;
+# 挫折和离别不过是生命中的点缀
+# &quot;&quot;&quot;
+headers = {
+    'Cookie': 'BAIDUID=1FD619A8398DD698091712D9EE68788E:FG=1',
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36&quot;
+           }
+params = {
+    'lan': 'zh',
+    'text': '{}'.format(content),
+    'spd': '5',
+    'source': 'web'
+
+}
+response = get(url=trans_url, params=params, headers=headers).content
+
+with open('test.mp3', 'wb') as f:
+    f.write(response)
+    f.flush()
+
+playsound('test.mp3')
+</code></pre>
+
+                </div>
+            </article>
         </div>
-    </article>
-</div>
-</div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://hakunassan.github.io/post/centos76-an-zhuang-redis505/" class="post-title gt-a-link">
+                    Centos7.6安装Redis5.0.5
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
         <div class="site-footer gt-c-content-color-first">
     <div class="slogan gt-c-content-color-first">谁能想到呢？</div>
     <div class="social-container">

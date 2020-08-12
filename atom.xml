@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hakunassan.github.io</id>
     <title>Hakuna&apos;s homepage</title>
-    <updated>2020-08-12T07:48:45.189Z</updated>
+    <updated>2020-08-12T07:52:02.581Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hakunassan.github.io"/>
     <link rel="self" href="https://hakunassan.github.io/atom.xml"/>
@@ -10,6 +10,212 @@
     <logo>https://hakunassan.github.io/images/avatar.png</logo>
     <icon>https://hakunassan.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Hakuna&apos;s homepage</rights>
+    <entry>
+        <title type="html"><![CDATA[基于tkinter的项目管理]]></title>
+        <id>https://hakunassan.github.io/post/ji-yu-tkinter-de-xiang-mu-guan-li/</id>
+        <link href="https://hakunassan.github.io/post/ji-yu-tkinter-de-xiang-mu-guan-li/">
+        </link>
+        <updated>2020-08-12T07:50:41.000Z</updated>
+        <summary type="html"><![CDATA[<p>王多鱼都要投这项目！</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>王多鱼都要投这项目！</p>
+<!-- more -->
+<h3 id="代码">代码</h3>
+<pre><code class="language-python">import tkinter as tk
+from tkinter import messagebox
+import sqlite3
+import os
+
+# 初始化创建数据库
+if os.path.isfile('project.db'):
+    pass
+else:
+    open('project.db', 'w')
+    conn = sqlite3.connect('project.db')
+    cursor = conn.cursor()
+    sql_create = '''
+    CREATE TABLE `project`(
+        `project_date` CHAR(50),
+        `project_name` CHAR(50),
+        `project_illustration` CHAR(500)
+        )
+    '''
+    cursor.execute(sql_create)
+    conn.commit()
+    conn.close()
+
+class App:
+    def __init__(self, root):
+        root.title(&quot;项目记录&quot;)
+        root.geometry('800x600')  # 设置窗体的大小
+        self.frame1 = tk.Frame(root, bg='red', width=800, height=50)
+        # pack()自动调节组件自身尺寸
+        self.frame1.pack()
+        # 创建一个框架
+        # 框架的作用一般是在复杂的布局中起到将组件分组的作用
+        self.frame2 = tk.Frame(root, bg='green', width=800, height=500)
+        # pack()自动调节组件自身尺寸
+        self.frame2.pack_forget()
+        # 创建一个框架
+        # 框架的作用一般是在复杂的布局中起到将组件分组的作用
+        self.frame3 = tk.Frame(root, bg='blue', width=800, height=500)
+        # pack()自动调节组件自身尺寸
+        self.frame3.pack()
+        # 创建一个框架
+        # 框架的作用一般是在复杂的布局中起到将组件分组的作用
+        self.frame4 = tk.Frame(root, bg='yellow', width=800, height=500)
+        # pack()自动调节组件自身尺寸
+        self.frame4.pack_forget()
+
+        # 创建一个捐助按钮
+        self.Button_donate = tk.Button(self.frame1, text=&quot;捐助&quot;, fg=&quot;blue&quot;, command=self.Button_donate)
+        self.Button_donate.pack(side=tk.RIGHT)
+
+        # 创建一个新增按钮，fg是foreground（前景色）
+        self.Button_new = tk.Button(self.frame1, text=&quot;新增&quot;, fg=&quot;blue&quot;, command=self.Button_new)
+        self.Button_new.pack(side=tk.LEFT)
+        # 创建一个查询按钮
+        self.Button_search = tk.Button(self.frame1, text=&quot;查询&quot;, fg=&quot;red&quot;, command=self.Button_search)
+        self.Button_search.pack(side=tk.RIGHT)
+
+        # 创建一个项目日期输入框
+        self.Project_date_info = tk.Label(self.frame2, text='项目日期', font=('Arial', 12))
+        self.Project_date_info.place(x=0, y=10, anchor='nw')
+        self.Project_date = tk.Entry(self.frame2, bd=2, width=10)
+        self.Project_date.place(x=0, y=50, anchor='nw')
+        # 创建一个项目名称输入框
+        self.Project_name_info = tk.Label(self.frame2, text='项目名称', font=('Arial', 12))
+        self.Project_name_info.place(x=100, y=10, anchor='nw')
+        self.Project_name = tk.Entry(self.frame2, bd=2, width=20)
+        self.Project_name.place(x=100, y=50, anchor='nw')
+        # 创建一个项目说明输入框
+        self.Project_illustration_info = tk.Label(self.frame2, text='项目说明', font=('Arial', 12))
+        self.Project_illustration_info.place(x=300, y=10, anchor='nw')
+        self.Project_illustration = tk.Entry(self.frame2, bd=2, width=50)
+        self.Project_illustration.place(x=300, y=50, anchor='nw')
+        # 创建一个保存按钮
+        self.Button_save = tk.Button(self.frame2, text=&quot;保存&quot;, fg=&quot;black&quot;, command=self.Project_save)
+        self.Button_save.place(x=750, y=45, anchor='nw')
+
+        # 创建一个项目名称输入框
+        self.Project_name_info = tk.Label(self.frame3, text='项目名称', font=('Arial', 12))
+        self.Project_name_info.place(x=50, y=10, anchor='nw')
+        self.Project_sname = tk.Entry(self.frame3, bd=2, width=20)
+        self.Project_sname.place(x=50, y=50, anchor='nw')
+        # 创建一个查询按钮
+        self.Button_search = tk.Button(self.frame3, text=&quot;项目查询&quot;, fg=&quot;black&quot;, command=self.Project_search)
+        self.Button_search.place(x=690, y=45, anchor='nw')
+        # 创建一个展示数据区域
+        self.Project_show = tk.Text(self.frame3, width=100, height=30)
+        self.Project_show.place(x=50, y=80, anchor='nw')
+        #创建捐助图片
+        self.photo = tk.PhotoImage(file='F:\\python-pro\\20200309\\donate2.gif')
+        self.donate_photo = tk.Label(self.frame4, image=self.photo).pack()
+
+    def Button_new(self):
+        self.frame2.pack()
+        self.frame3.pack_forget()
+        self.frame4.pack_forget()
+
+    def Button_search(self):
+        self.frame2.pack_forget()
+        self.frame3.pack()
+        self.frame4.pack_forget()
+
+    def Button_donate(self):
+        self.frame4.pack()
+        self.frame2.pack_forget()
+        self.frame3.pack_forget()
+
+    def Project_save(self):
+        date = self.Project_date.get()
+        name = self.Project_name.get()
+        illustration = self.Project_illustration.get()
+        con = sqlite3.connect('project.db')
+        cur = con.cursor()
+        try:
+            sql = &quot;insert into project (project_date,project_name,project_illustration) values ('%s','%s','%s')&quot;
+            sql1 = sql % (date, name, illustration)
+            cur.execute(sql1)
+        except Exception as e:
+            con.rollback()
+            tk.messagebox.showinfo('警告', '保存失败！')
+        finally:
+            con.commit()
+            cur.close()
+            con.close()
+            tk.messagebox.showinfo('提示', '保存成功！')
+
+    def Project_search(self):
+        self.Project_show.delete('1.0', 'end')
+        sname = self.Project_sname.get()
+        con = sqlite3.connect('project.db')
+        cur = con.cursor()
+        sql = &quot;select * from project where project_name like '%%{}%%'&quot;.format(sname)
+        cur.execute(sql)
+        con.commit()
+        data = cur.fetchall()
+        for result in data:
+            self.Project_show.insert(&quot;insert&quot;, result)
+            self.Project_show.insert(&quot;insert&quot;, '\n')
+        cur.close()
+        con.close()
+
+root = tk.Tk()
+app = App(root)
+
+# 开始主事件循环
+
+root.mainloop()
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[调用百度翻译生成语音]]></title>
+        <id>https://hakunassan.github.io/post/diao-yong-bai-du-fan-yi-sheng-cheng-yu-yin/</id>
+        <link href="https://hakunassan.github.io/post/diao-yong-bai-du-fan-yi-sheng-cheng-yu-yin/">
+        </link>
+        <updated>2020-08-12T07:48:49.000Z</updated>
+        <summary type="html"><![CDATA[<p>秀到我了</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>秀到我了</p>
+<!-- more -->
+<h3 id="代码说明">代码说明</h3>
+<ol>
+<li>导入requests、playsound模块</li>
+<li>通过url和cookie调用百度翻译网页生成语音</li>
+<li>保存语音文件至程序目录的test.mp3中</li>
+<li>使用playsound方法播放语音</li>
+</ol>
+<pre><code class="language-python">from requests import get
+from playsound import playsound
+
+trans_url = 'https://fanyi.baidu.com/gettts?'
+content = input(&quot;输入一句话：&quot;)
+# content = &quot;&quot;&quot;
+# 挫折和离别不过是生命中的点缀
+# &quot;&quot;&quot;
+headers = {
+    'Cookie': 'BAIDUID=1FD619A8398DD698091712D9EE68788E:FG=1',
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36&quot;
+           }
+params = {
+    'lan': 'zh',
+    'text': '{}'.format(content),
+    'spd': '5',
+    'source': 'web'
+
+}
+response = get(url=trans_url, params=params, headers=headers).content
+
+with open('test.mp3', 'wb') as f:
+    f.write(response)
+    f.flush()
+
+playsound('test.mp3')
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Centos7.6安装Redis5.0.5]]></title>
         <id>https://hakunassan.github.io/post/centos76-an-zhuang-redis505/</id>

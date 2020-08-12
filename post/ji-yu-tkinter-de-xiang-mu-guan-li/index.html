@@ -1,0 +1,308 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>基于tkinter的项目管理 | Hakuna&#39;s homepage</title>
+
+<link rel="shortcut icon" href="https://hakunassan.github.io/favicon.ico?v=1597218686050">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://hakunassan.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            Hakuna&#39;s homepage
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1597218686050" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    基于tkinter的项目管理
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-08-12 ·
+                    </time>
+                    
+                        <a href="https://hakunassan.github.io/tag/sgSewW8y5/" class="post-tags">
+                            # Python
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>王多鱼都要投这项目！</p>
+<!-- more -->
+<h3 id="代码">代码</h3>
+<pre><code class="language-python">import tkinter as tk
+from tkinter import messagebox
+import sqlite3
+import os
+
+# 初始化创建数据库
+if os.path.isfile('project.db'):
+    pass
+else:
+    open('project.db', 'w')
+    conn = sqlite3.connect('project.db')
+    cursor = conn.cursor()
+    sql_create = '''
+    CREATE TABLE `project`(
+        `project_date` CHAR(50),
+        `project_name` CHAR(50),
+        `project_illustration` CHAR(500)
+        )
+    '''
+    cursor.execute(sql_create)
+    conn.commit()
+    conn.close()
+
+class App:
+    def __init__(self, root):
+        root.title(&quot;项目记录&quot;)
+        root.geometry('800x600')  # 设置窗体的大小
+        self.frame1 = tk.Frame(root, bg='red', width=800, height=50)
+        # pack()自动调节组件自身尺寸
+        self.frame1.pack()
+        # 创建一个框架
+        # 框架的作用一般是在复杂的布局中起到将组件分组的作用
+        self.frame2 = tk.Frame(root, bg='green', width=800, height=500)
+        # pack()自动调节组件自身尺寸
+        self.frame2.pack_forget()
+        # 创建一个框架
+        # 框架的作用一般是在复杂的布局中起到将组件分组的作用
+        self.frame3 = tk.Frame(root, bg='blue', width=800, height=500)
+        # pack()自动调节组件自身尺寸
+        self.frame3.pack()
+        # 创建一个框架
+        # 框架的作用一般是在复杂的布局中起到将组件分组的作用
+        self.frame4 = tk.Frame(root, bg='yellow', width=800, height=500)
+        # pack()自动调节组件自身尺寸
+        self.frame4.pack_forget()
+
+        # 创建一个捐助按钮
+        self.Button_donate = tk.Button(self.frame1, text=&quot;捐助&quot;, fg=&quot;blue&quot;, command=self.Button_donate)
+        self.Button_donate.pack(side=tk.RIGHT)
+
+        # 创建一个新增按钮，fg是foreground（前景色）
+        self.Button_new = tk.Button(self.frame1, text=&quot;新增&quot;, fg=&quot;blue&quot;, command=self.Button_new)
+        self.Button_new.pack(side=tk.LEFT)
+        # 创建一个查询按钮
+        self.Button_search = tk.Button(self.frame1, text=&quot;查询&quot;, fg=&quot;red&quot;, command=self.Button_search)
+        self.Button_search.pack(side=tk.RIGHT)
+
+        # 创建一个项目日期输入框
+        self.Project_date_info = tk.Label(self.frame2, text='项目日期', font=('Arial', 12))
+        self.Project_date_info.place(x=0, y=10, anchor='nw')
+        self.Project_date = tk.Entry(self.frame2, bd=2, width=10)
+        self.Project_date.place(x=0, y=50, anchor='nw')
+        # 创建一个项目名称输入框
+        self.Project_name_info = tk.Label(self.frame2, text='项目名称', font=('Arial', 12))
+        self.Project_name_info.place(x=100, y=10, anchor='nw')
+        self.Project_name = tk.Entry(self.frame2, bd=2, width=20)
+        self.Project_name.place(x=100, y=50, anchor='nw')
+        # 创建一个项目说明输入框
+        self.Project_illustration_info = tk.Label(self.frame2, text='项目说明', font=('Arial', 12))
+        self.Project_illustration_info.place(x=300, y=10, anchor='nw')
+        self.Project_illustration = tk.Entry(self.frame2, bd=2, width=50)
+        self.Project_illustration.place(x=300, y=50, anchor='nw')
+        # 创建一个保存按钮
+        self.Button_save = tk.Button(self.frame2, text=&quot;保存&quot;, fg=&quot;black&quot;, command=self.Project_save)
+        self.Button_save.place(x=750, y=45, anchor='nw')
+
+        # 创建一个项目名称输入框
+        self.Project_name_info = tk.Label(self.frame3, text='项目名称', font=('Arial', 12))
+        self.Project_name_info.place(x=50, y=10, anchor='nw')
+        self.Project_sname = tk.Entry(self.frame3, bd=2, width=20)
+        self.Project_sname.place(x=50, y=50, anchor='nw')
+        # 创建一个查询按钮
+        self.Button_search = tk.Button(self.frame3, text=&quot;项目查询&quot;, fg=&quot;black&quot;, command=self.Project_search)
+        self.Button_search.place(x=690, y=45, anchor='nw')
+        # 创建一个展示数据区域
+        self.Project_show = tk.Text(self.frame3, width=100, height=30)
+        self.Project_show.place(x=50, y=80, anchor='nw')
+        #创建捐助图片
+        self.photo = tk.PhotoImage(file='F:\\python-pro\\20200309\\donate2.gif')
+        self.donate_photo = tk.Label(self.frame4, image=self.photo).pack()
+
+    def Button_new(self):
+        self.frame2.pack()
+        self.frame3.pack_forget()
+        self.frame4.pack_forget()
+
+    def Button_search(self):
+        self.frame2.pack_forget()
+        self.frame3.pack()
+        self.frame4.pack_forget()
+
+    def Button_donate(self):
+        self.frame4.pack()
+        self.frame2.pack_forget()
+        self.frame3.pack_forget()
+
+    def Project_save(self):
+        date = self.Project_date.get()
+        name = self.Project_name.get()
+        illustration = self.Project_illustration.get()
+        con = sqlite3.connect('project.db')
+        cur = con.cursor()
+        try:
+            sql = &quot;insert into project (project_date,project_name,project_illustration) values ('%s','%s','%s')&quot;
+            sql1 = sql % (date, name, illustration)
+            cur.execute(sql1)
+        except Exception as e:
+            con.rollback()
+            tk.messagebox.showinfo('警告', '保存失败！')
+        finally:
+            con.commit()
+            cur.close()
+            con.close()
+            tk.messagebox.showinfo('提示', '保存成功！')
+
+    def Project_search(self):
+        self.Project_show.delete('1.0', 'end')
+        sname = self.Project_sname.get()
+        con = sqlite3.connect('project.db')
+        cur = con.cursor()
+        sql = &quot;select * from project where project_name like '%%{}%%'&quot;.format(sname)
+        cur.execute(sql)
+        con.commit()
+        data = cur.fetchall()
+        for result in data:
+            self.Project_show.insert(&quot;insert&quot;, result)
+            self.Project_show.insert(&quot;insert&quot;, '\n')
+        cur.close()
+        con.close()
+
+root = tk.Tk()
+app = App(root)
+
+# 开始主事件循环
+
+root.mainloop()
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://hakunassan.github.io/post/diao-yong-bai-du-fan-yi-sheng-cheng-yu-yin/" class="post-title gt-a-link">
+                    调用百度翻译生成语音
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">谁能想到呢？</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://hakunassan.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>
